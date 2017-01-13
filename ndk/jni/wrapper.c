@@ -88,8 +88,8 @@ jlong JNICALL cinit(JNIEnv *env, jobject obj, jint level) {
 	}
 
 	long inst = (long)instance;
-    return inst;
-	failed:
+        return inst;
+	failed: 
 	if (instance->buffOut != NULL) {
 		free(instance->buffOut);
 	}
@@ -128,7 +128,7 @@ jlong JNICALL dinit(JNIEnv *env, jobject obj) {
 	}
 	
 	long inst = (long)instance;
-    return inst;
+        return inst;
 	failed:
 	if (instance->buffOut != NULL) {
 		free(instance->buffOut);
@@ -165,7 +165,7 @@ jbyteArray JNICALL zstd_stream_decompress(JNIEnv *env, jobject obj, jlong instan
 	int needFreeBuffResult = 1;
 	int buffResultSize = 0;
 	int errCode = 0;
-    unsigned char *pSrc = NULL;
+        unsigned char *pSrc = NULL;
 
 	if ((isEnd > 0) && (srcLen == 0)) {
 		goto flushFrame;
@@ -186,7 +186,7 @@ jbyteArray JNICALL zstd_stream_decompress(JNIEnv *env, jobject obj, jlong instan
 		if (ZSTD_isError(hintSize)) {
 			LOGE("decompress error:%s\n", ZSTD_getErrorName(hintSize));
 			errCode = -2;
-		    goto out;
+		        goto out;
 		}
 		//LOGI("Loop:%d input pos:%d size:%d hitsize:%d output pos:%d dstream stage:%d\n", inLoop, input.pos, input.size, hintSize, output.pos, getStage(dstream));
 		if (output.pos > 0) {
@@ -194,16 +194,16 @@ jbyteArray JNICALL zstd_stream_decompress(JNIEnv *env, jobject obj, jlong instan
 				buffResult = malloc(output.pos);
 				if (buffResult == NULL) {
 					LOGE("mem failed.");
-		            errCode = -3;
-		            goto out;
+		                        errCode = -3;
+		                        goto out;
 				}
 				memcpy(buffResult, buffOut, output.pos);				
 			} else {
-			    char *curr = malloc(buffResultSize + output.pos);
+			       char *curr = malloc(buffResultSize + output.pos);
 				if (curr == NULL) {
 					LOGE("mem failed.");
-		            errCode = -4;
-		            goto out;
+		                        errCode = -4;
+		                        goto out;
 				}
 				memcpy(curr, buffResult, buffResultSize);
 				memcpy(curr + buffResultSize, buffOut, output.pos);
@@ -217,7 +217,7 @@ jbyteArray JNICALL zstd_stream_decompress(JNIEnv *env, jobject obj, jlong instan
 
     flushFrame:
     if (isEnd > 0) {
-		// only free dstream.
+        // only free dstream.
     }
 
 	jbyteArray bytes = (*env)->NewByteArray(env, buffResultSize);
@@ -231,10 +231,10 @@ jbyteArray JNICALL zstd_stream_decompress(JNIEnv *env, jobject obj, jlong instan
 	}
 
 	out:
-    // free resource if necessary.
-    if (pSrc != NULL) {
+        // free resource if necessary.
+        if (pSrc != NULL) {
 		(*env)->ReleaseByteArrayElements(env, src, pSrc, 0);
-    }	
+        }	
 	if ((buffResult != NULL) && (needFreeBuffResult > 0)) {
 		free(buffResult);
 	}
@@ -257,7 +257,7 @@ jbyteArray JNICALL zstd_stream_compress(JNIEnv *env, jobject obj, jlong instance
 	int needFreeBuffResult = 1;
 	int buffResultSize = 0;
 	int errCode = 0;
-    unsigned char *pSrc = NULL;
+        unsigned char *pSrc = NULL;
 
 	if ((isEnd > 0) && (srcLen == 0)) {
 		goto flushFrame;
@@ -276,23 +276,23 @@ jbyteArray JNICALL zstd_stream_compress(JNIEnv *env, jobject obj, jlong instance
 		if (ZSTD_isError(hintSize)) {
 			LOGE("compress error:%s\n", ZSTD_getErrorName(hintSize));
 			errCode = -2;
-		    goto out;
+		        goto out;
 		}
 		if (output.pos > 0) {
 			if (segs == 0) {
 				buffResult = malloc(output.pos);
 				if (buffResult == NULL) {
 					LOGE("mem failed.");
-		            errCode = -3;
-		            goto out;
+		                        errCode = -3;
+		                        goto out;
 				}
 				memcpy(buffResult, buffOut, output.pos);				
 			} else {
-			    char *curr = malloc(buffResultSize + output.pos);
+			        char *curr = malloc(buffResultSize + output.pos);
 				if (curr == NULL) {
 					LOGE("mem failed.");
-		            errCode = -4;
-		            goto out;
+		                        errCode = -4;
+		                        goto out;
 				}
 				memcpy(curr, buffResult, buffResultSize);
 				memcpy(curr + buffResultSize, buffOut, output.pos);
@@ -310,19 +310,19 @@ jbyteArray JNICALL zstd_stream_compress(JNIEnv *env, jobject obj, jlong instance
 		size_t const remainingToFlush = ZSTD_endStream(cstream, &output);
 		if (remainingToFlush) { 
 			LOGE("end cstream failed.");
-		    errCode = -5;
-		    goto out;
+		        errCode = -5;
+		        goto out;
 		}
 		if (output.pos > 0) {
 			if (buffResult == NULL) {
 				needFreeBuffResult = 0;
 				buffResult = buffOut;				
 			} else {
-			    char *curr = malloc(buffResultSize + output.pos);
+			        char *curr = malloc(buffResultSize + output.pos);
 				if (curr == NULL) {
 					LOGE("mem failed.");
-		            errCode = -6;
-		            goto out;
+		                        errCode = -6;
+		                        goto out;
 				}
 				memcpy(curr, buffResult, buffResultSize);
 				memcpy(curr + buffResultSize, buffOut, output.pos);
@@ -344,10 +344,10 @@ jbyteArray JNICALL zstd_stream_compress(JNIEnv *env, jobject obj, jlong instance
 	}
 
 	out:
-    // free resource if necessary.
-    if (pSrc != NULL) {
+        // free resource if necessary.
+        if (pSrc != NULL) {
 		(*env)->ReleaseByteArrayElements(env, src, pSrc, 0);
-    }	
+        }	
 	if ((buffResult != NULL) && (needFreeBuffResult > 0)) {
 		free(buffResult);
 	}

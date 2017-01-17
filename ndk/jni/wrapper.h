@@ -9,7 +9,6 @@ extern "C" {
 #include <stdlib.h>
 
 #define COMPILE_ZSTD 1
-#define COMPILE_LZ4  0
 
 #define CONSOLE_PRINT 0
 #define LOGCAT_PRINT  1
@@ -23,26 +22,19 @@ static const char *TAG = "ZSTD";
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__) 
 #define LOGW(...) __android_log_print(ANDROID_LOG_WARN, TAG,__VA_ARGS__) 
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG,__VA_ARGS__)
-#define MY_DEBUG 1
-#elif (CONSOLE_PRINT > 0)
-	
+#elif (CONSOLE_PRINT > 0)	
 #define LOGV(...) printf(__VA_ARGS__) 
 #define LOGD(...) printf(__VA_ARGS__)  
 #define LOGI(...) printf(__VA_ARGS__)  
 #define LOGW(...) printf(__VA_ARGS__)  
 #define LOGE(...) printf(__VA_ARGS__) 
-#define MY_DEBUG 1
 #else
-#define MY_DEBUG 0
 #define LOGV(...) do{}while(0)
 #define LOGD(...) do{}while(0)
 #define LOGI(...) do{}while(0)
 #define LOGW(...) do{}while(0)  
 #define LOGE(...) do{}while(0)
-
 #endif 
-
-
 
 
 #ifdef __cplusplus

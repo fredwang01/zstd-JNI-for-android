@@ -7,5 +7,5 @@ I writed a JNI wrapper, and compiled the ZSTD library for android platform. In t
 `decompress` and `dictBuilder` are all ZSTD library code, you can use the latest version to replace them.
 
 By the way, in early release of ZSTD, the API for callers is a little bit confusing, caller must check the inner status of the decompress API, that is unreasonable.
-New code of the ZSTD already fixed this issue and the API using is easy and clear. About this issue , i have a post [here](https://github.com/facebook/zstd/issues/374).
+New code of the ZSTD already fixed this issue and the API using is easy and clear. About this issue , i post a discussion [here](https://github.com/facebook/zstd/issues/374).
 

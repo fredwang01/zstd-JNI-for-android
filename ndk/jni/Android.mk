@@ -30,7 +30,7 @@ ZSTD_SRC = $(COMMON_SRC) $(COMPRESS_SRC) $(DECOMPRESS_SRC) $(DICT_SRC)
 LOCAL_SRC_FILES := $(ZSTD_SRC)  wrapper.c
 LOCAL_LDLIBS    := -llog 
 
-# compiled so for android6.0+
+# compiled library for android6.0+
 LOCAL_LDFLAGS += -pie -fPIE -shared
 LOCAL_CFLAGS += -pie -fPIE
 

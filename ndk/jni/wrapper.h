@@ -1,5 +1,5 @@
-#ifndef _wrapper_H
-#define _wrapper_H
+#ifndef WRAPPER_H
+#define WRAPPER_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -7,8 +7,6 @@ extern "C" {
 
 #include <stdio.h>
 #include <stdlib.h>
-
-#define COMPILE_ZSTD 1
 
 #define CONSOLE_PRINT 0
 #define LOGCAT_PRINT  1

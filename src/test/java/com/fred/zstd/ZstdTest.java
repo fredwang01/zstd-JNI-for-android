@@ -29,7 +29,7 @@ public class ZstdTest {
             compressedBytes.write(bytes, 0, bytes.length);
         }
 
-        // uncompress status
+        // decompress status
         ret = zstd.dinit();
         if (ret != 0) {
             Log.e(TAG, "dinit error.");

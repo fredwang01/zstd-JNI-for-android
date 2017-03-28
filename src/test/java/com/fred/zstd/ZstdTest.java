@@ -11,7 +11,7 @@ public class ZstdTest {
 
     public boolean test(byte[] original) {
         ByteArrayOutputStream compressedBytes = new ByteArrayOutputStream();
-        ByteArrayOutputStream uncompressedBytes = new ByteArrayOutputStream();
+        ByteArrayOutputStream decompressedBytes = new ByteArrayOutputStream();
 
         Zstd zstd = Zstd.getInstance();
         // compress status
@@ -37,14 +37,14 @@ public class ZstdTest {
         }
         bytes = zstd.update(compressedBytes.toByteArray());
         if (bytes.length > 0) {
-            uncompressedBytes.write(bytes, 0, bytes.length);
+            decompressedBytes.write(bytes, 0, bytes.length);
         }
         bytes = zstd.end();
         if (bytes.length > 0) {
-            uncompressedBytes.write(bytes, 0, bytes.length);
+            decompressedBytes.write(bytes, 0, bytes.length);
         }
 
-        // compare the original with the uncompressed data. should be equal.
-        return Arrays.equals(original, uncompressedBytes.toByteArray());
+        // compare the original with the decompressed data. should be equal.
+        return Arrays.equals(original, decompressedBytes.toByteArray());
     }
 }

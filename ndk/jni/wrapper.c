@@ -217,35 +217,35 @@ jbyteArray JNICALL zstd_stream_decompress(JNIEnv *env, jobject obj, jlong instan
 
     flushFrame:
     if (isEnd > 0) {
-        // only free dstream.
+	// do nothing. only free dstream.
     }
 
-	jbyteArray bytes = (*env)->NewByteArray(env, buffResultSize);
-	if (bytes == NULL) {
-		LOGE("mem obj failed.");
-		errCode = -7;
-		goto out;
-	}
-	if (buffResult != NULL) {
-		(*env)->SetByteArrayRegion(env, bytes, 0, buffResultSize, buffResult);
-	}
+    jbyteArray bytes = (*env)->NewByteArray(env, buffResultSize);
+    if (bytes == NULL) {
+	LOGE("mem obj failed.");
+	errCode = -7;
+	goto out;
+    }
+    if (buffResult != NULL) {
+	(*env)->SetByteArrayRegion(env, bytes, 0, buffResultSize, buffResult);
+    }
 
-	out:
-        // free resource if necessary.
-        if (pSrc != NULL) {
-		(*env)->ReleaseByteArrayElements(env, src, pSrc, 0);
-        }	
-	if ((buffResult != NULL) && (needFreeBuffResult > 0)) {
-		free(buffResult);
-	}
-	if (isEnd > 0) {
-		freeZstdDinstance(pinstance);
-	}
-	if (errCode != 0) {
-		setErrCode(env, obj, errCode);
-		return NULL;
-	}	
-	return bytes;
+    out:
+    // free resource if necessary.
+    if (pSrc != NULL) {
+        (*env)->ReleaseByteArrayElements(env, src, pSrc, 0);
+    }	
+    if ((buffResult != NULL) && (needFreeBuffResult > 0)) {
+	free(buffResult);
+    }
+    if (isEnd > 0) {
+	freeZstdDinstance(pinstance);
+    }
+    if (errCode != 0) {
+	setErrCode(env, obj, errCode);
+	return NULL;
+    }	
+    return bytes;
 }
 
 jbyteArray JNICALL zstd_stream_compress(JNIEnv *env, jobject obj, jlong instance, jbyteArray src, jint offset, jint srcLen, jint isEnd) {
